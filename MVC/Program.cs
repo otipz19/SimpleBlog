@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Data;
 namespace MVC
 {
     public class Program
@@ -5,9 +8,12 @@ namespace MVC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+           
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddAppDbContext(builder.Configuration)
+                .AddIdentity();
 
             var app = builder.Build();
 
@@ -24,11 +30,14 @@ namespace MVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapRazorPages();
 
             app.Run();
         }
