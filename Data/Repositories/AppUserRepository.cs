@@ -1,69 +1,70 @@
 ﻿using Data.Entities;
+using Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Data.Repositories
 {
-    public class AppUserRepository : BaseReadWriteRepository<AppUser>
+    public class AppUserRepository : BaseReadWriteRepository<AppUser>, IAppUserRepository
     {
         public AppUserRepository(AppDbContext context) : base(context)
         {
         }
 
-        public override AppUserRepository Filter(Expression<Func<AppUser, bool>> filter)
+        public override IAppUserRepository Filter(Expression<Func<AppUser, bool>> filter)
         {
             return (AppUserRepository)base.Filter(filter);
         }
 
-        public AppUserRepository IncludeFollows()
+        public IAppUserRepository IncludeFollows()
         {
             _query = _query.Include(e => e.Follows);
             return this;
         }
 
-        public AppUserRepository IncludeFollowers()
+        public IAppUserRepository IncludeFollowers()
         {
             _query = _query.Include(e => e.Followers);
             return this;
         }
 
-        public AppUserRepository IncludeCreatedPosts()
+        public IAppUserRepository IncludeCreatedPosts()
         {
             _query = _query.Include(e => e.CreatedPosts);
             return this;
         }
 
-        public AppUserRepository IncludeWatchedPosts()
+        public IAppUserRepository IncludeWatchedPosts()
         {
             _query = _query.Include(e => e.WatchedPosts);
             return this;
         }
 
-        public AppUserRepository IncludeLikedPosts()
+        public IAppUserRepository IncludeLikedPosts()
         {
             _query = _query.Include(e => e.LikedPosts);
             return this;
         }
         
-        public AppUserRepository IncludeDislikedPosts()
+        public IAppUserRepository IncludeDislikedPosts()
         {
             _query = _query.Include(e => e.DislikedPosts);
             return this;
         }
 
-        public AppUserRepository IncludeCreatedComments()
+        public IAppUserRepository IncludeCreatedComments()
         {
             _query = _query.Include(e => e.CreatedComments);
             return this;
         }
 
-        public AppUserRepository IncludeLikedComments()
+        public IAppUserRepository IncludeLikedComments()
         {
             _query = _query.Include(e => e.LikedComments);
             return this;
         }
 
-        public AppUserRepository IncludeDislikedComments()
+        public IAppUserRepository IncludeDislikedComments()
         {
             _query = _query.Include(e => e.DislikedComments);
             return this;

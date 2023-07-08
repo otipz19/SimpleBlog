@@ -1,21 +1,22 @@
 ﻿using Data.Entities;
+using Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Data.Repositories
 {
-    public class PostRepository : BaseReadWriteRepository<Post>
+    public class PostRepository : BaseReadWriteRepository<Post>, IPostRepository
     {
         public PostRepository(AppDbContext context) : base(context)
         {
         }
 
-        public override PostRepository Filter(Expression<Func<Post, bool>> filter)
+        public override IPostRepository Filter(Expression<Func<Post, bool>> filter)
         {
             return (PostRepository)base.Filter(filter);
         }
 
-        public PostRepository IncludeAll()
+        public IPostRepository IncludeAll()
         {
             return this.IncludeAuthor()
                 .IncludeComments()
@@ -24,31 +25,31 @@ namespace Data.Repositories
                 .IncludeDislikes();
         }
 
-        public PostRepository IncludeAuthor()
+        public IPostRepository IncludeAuthor()
         {
             _query = _query.Include(e => e.CreatedByUser);
             return this;
         }
 
-        public PostRepository IncludeComments()
+        public IPostRepository IncludeComments()
         {
             _query = _query.Include(e => e.Comments);
             return this;
         }
 
-        public PostRepository IncludeWatches()
+        public IPostRepository IncludeWatches()
         {
             _query = _query.Include(e => e.WatchedBy);
             return this;
         }
 
-        public PostRepository IncludeLikes()
+        public IPostRepository IncludeLikes()
         {
             _query = _query.Include(e => e.LikedBy);
             return this;
         }
 
-        public PostRepository IncludeDislikes()
+        public IPostRepository IncludeDislikes()
         {
             _query = _query.Include(e => e.DislikedBy);
             return this;

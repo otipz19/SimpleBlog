@@ -1,19 +1,20 @@
 ﻿using Data.Entities;
+using Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Data.Repositories
 {
-    public class CommentRepository : BaseReadWriteRepository<Comment>
+    public class CommentRepository : BaseReadWriteRepository<Comment>, ICommentRepository
     {
         public CommentRepository(AppDbContext context) : base(context) { }
 
-        public override CommentRepository Filter(Expression<Func<Comment, bool>> filter)
+        public override ICommentRepository Filter(Expression<Func<Comment, bool>> filter)
         {
             return (CommentRepository)base.Filter(filter);
         }
 
-        public CommentRepository IncludeAll()
+        public ICommentRepository IncludeAll()
         {
             return this.IncludeAuthor()
                 .IncludeParentPost()
@@ -23,37 +24,37 @@ namespace Data.Repositories
                 .IncludeDislikes();
         }
 
-        public CommentRepository IncludeAuthor()
+        public ICommentRepository IncludeAuthor()
         {
             _query = _query.Include(e => e.CreatedByUser);
             return this;
         }
 
-        public CommentRepository IncludeParentPost()
+        public ICommentRepository IncludeParentPost()
         {
             _query = _query.Include(e => e.ParentPost);
             return this;
         }
 
-        public CommentRepository IncludeParentComment()
+        public ICommentRepository IncludeParentComment()
         {
             _query = _query.Include(e => e.ParentComment);
             return this;
         }
 
-        public CommentRepository IncludeAnswers()
+        public ICommentRepository IncludeAnswers()
         {
             _query = _query.Include(e => e.Anwsers);
             return this;
         }
 
-        public CommentRepository IncludeLikes()
+        public ICommentRepository IncludeLikes()
         {
             _query = _query.Include(e => e.LikedBy);
             return this;
         }
 
-        public CommentRepository IncludeDislikes()
+        public ICommentRepository IncludeDislikes()
         {
             _query = _query.Include(e => e.DislikedBy);
             return this;

@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
-    public abstract class BaseWriteRepository<T>
+    public abstract class BaseWriteRepository<T> : IBaseWriteRepository<T>
         where T : class
     {
         protected DbSet<T> _set;

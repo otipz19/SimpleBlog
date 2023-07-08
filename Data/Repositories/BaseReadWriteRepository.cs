@@ -1,11 +1,12 @@
 ﻿using Data.Entities;
 using Data.Pagination;
+using Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Data.Repositories
 {
-    public abstract class BaseReadWriteRepository<T> : BaseWriteRepository<T>
+    public abstract class BaseReadWriteRepository<T> : BaseWriteRepository<T>, IBaseReadWriteRepository<T>
         where T : class
     {
         protected IQueryable<T> _query;
@@ -15,7 +16,7 @@ namespace Data.Repositories
             _query = _set.AsQueryable();
         }
 
-        public virtual BaseReadWriteRepository<T> Filter(Expression<Func<T, bool>> filter)
+        public virtual IBaseReadWriteRepository<T> Filter(Expression<Func<T, bool>> filter)
         {
             _query = _query.Where(filter);
             return this;

@@ -13,6 +13,7 @@ namespace MVC
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddAppDbContext(builder.Configuration)
+                .AddRepositoriesAndUnitOfWork()
                 .AddIdentity();
 
             var app = builder.Build();
