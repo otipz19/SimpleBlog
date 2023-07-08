@@ -8,6 +8,10 @@ namespace Data.Entities
 
         public DateTime CreatedAt { get; set; }
 
+        public bool IsPublished { get; set; }
+
+        public DateTime? PublishedAt { get; set; }
+
         [Required]
         public string CreatedByUserId { get; set; }
 
@@ -18,7 +22,8 @@ namespace Data.Entities
 
         public int TimeToRead { get; set; }
 
-        [Required]
+        public string PreviewImageSrc { get; set; }
+
         public string Content { get; set; }
        
         public virtual List<Comment> Comments { get; set; } = new();
